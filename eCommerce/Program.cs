@@ -1,4 +1,5 @@
 using eCommerce.Data;
+using eCommerce.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,7 @@ var ConnectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(ConnectionString));
 
 
-
+builder.Services.AddTransient<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 

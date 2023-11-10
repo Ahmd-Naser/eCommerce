@@ -11,5 +11,18 @@ namespace eCommerce.Data
         {
 
         }
+
+        public DbSet<ApplicationUser> Users { set;get; }
+
+        public DbSet<Cart> Carts { set; get; }
+        public DbSet<Category> Categorys { set; get; }
+
+
+        public DbSet<Order> Orders { set; get; }
+
+        public DbSet<Product> Products { set; get; }
+
+
+
     }
 }
