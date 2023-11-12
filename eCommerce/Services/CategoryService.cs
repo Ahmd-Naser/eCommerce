@@ -71,7 +71,8 @@ namespace eCommerce.Services
                         Name = product.Name,
                         Description = product.Description,
                         Price = product.Price,
-                        Stock = product.Stock
+                        Stock = product.Stock,
+                        CategoryId = product.CategoryId
                     } );
             }
 

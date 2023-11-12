@@ -1,4 +1,5 @@
 ﻿using eCommerce.Data;
+using eCommerce.DTOs;
 using eCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ namespace eCommerce.Services
         public Product Add(Product product)
         {
             _context.Products.Add(product);
+            _context.SaveChanges();
 
             return product;
         }
@@ -25,10 +27,27 @@ namespace eCommerce.Services
             return product;
         }
 
-        public async Task<IEnumerable<Product>> GetAll()
+        public async Task<IEnumerable<ProductDto>> GetAll()
         {
-            var products = await _context.Products.ToListAsync();
-        
+            var Products = await _context.Products.ToListAsync();
+
+            List<ProductDto> products = new List<ProductDto>();
+
+            foreach (var product in Products)
+            {
+                products.Add(
+                    new ProductDto
+                    {
+                        ProductId = product.ProductId,
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Stock = product.Stock,
+                        CategoryId = product.CategoryId
+                    });
+            }
+
+
             return products;
         }
 

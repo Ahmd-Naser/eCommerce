@@ -1,4 +1,5 @@
 ﻿using eCommerce.Models;
+using eCommerce.DTOs;
 using System.Security.Cryptography;
 
 namespace eCommerce.Services
@@ -11,7 +12,7 @@ namespace eCommerce.Services
         public Task<Product> GetById(int id);
         public Task< Product> GetByName(string name);
 
-        public Task<IEnumerable<Product>> GetAll();
+        public Task<IEnumerable<ProductDto>> GetAll();
 
     }
 }
