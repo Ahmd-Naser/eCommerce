@@ -1,4 +1,5 @@
 ﻿using eCommerce.Data;
+using eCommerce.DTOs;
 using eCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,6 +34,10 @@ namespace eCommerce.Services
         public async Task<IEnumerable<Category>> GetAll()
         {
             var Categories = await _context.Categorys.OrderBy(c => c.Name).ToListAsync();
+           
+            if(Categories is null)
+                Categories = new List<Category>();
+
 
             return Categories;
         }
@@ -46,9 +51,31 @@ namespace eCommerce.Services
 
         public async Task<Category> GetByName(string name)
         {
-            var category = await _context.Categorys.FirstOrDefaultAsync(c => c.Name == name);
+            Category category = await _context.Categorys.FirstOrDefaultAsync(c => c.Name == name);
 
             return category;
+        }
+
+        public async Task<IEnumerable<ProductDto>> GetProducts(int id = 0)
+        {
+            var Products = await _context.Products.Where(p => p.CategoryId == id || id == 0).ToListAsync();
+
+            List<ProductDto> products = new List<ProductDto>();
+
+            foreach (var product in Products)
+            {
+                products.Add(
+                    new ProductDto
+                    {
+                        ProductId = product.ProductId,
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Stock = product.Stock
+                    } );
+            }
+
+            return products;
         }
 
         public Category Update(Category category)

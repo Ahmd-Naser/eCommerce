@@ -3,7 +3,7 @@
     public class Product
     {
         public int ProductId { set; get; }
-        public string SKU { set; get; }
+        public string Name { set; get; }
         public string Description { set; get; }
         public int Price { set; get; }
         public int Stock { set; get; }

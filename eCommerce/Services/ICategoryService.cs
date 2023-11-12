@@ -1,4 +1,5 @@
-﻿using eCommerce.Models;
+﻿using eCommerce.DTOs;
+using eCommerce.Models;
 
 namespace eCommerce.Services
 {
@@ -12,5 +13,7 @@ namespace eCommerce.Services
         Category Add(Category category);
 
         Category Delete(Category category);
+
+         Task<IEnumerable<ProductDto>> GetProducts(int id = 0);
     }
 }
