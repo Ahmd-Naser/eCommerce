@@ -67,7 +67,7 @@ namespace eCommerce.Controllers
 
             mapProduct(product, dto);
 
-
+            _productService.Update(product);
 
             return Ok(mapToDto(product));
         }
@@ -113,7 +113,7 @@ namespace eCommerce.Controllers
 
             _productService.Delete(product);
 
-            return Ok(product);
+            return Ok(mapToDto( product));
 
         }
 
