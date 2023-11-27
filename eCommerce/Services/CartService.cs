@@ -1,4 +1,5 @@
 ﻿using eCommerce.Data;
+using eCommerce.DTOs;
 using eCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,28 +13,34 @@ namespace eCommerce.Services
             _context = context;
         }
 
-        public async Task<Cart> Add(Cart cart)
+        public async Task<CartDetailsDto> Add(Cart cart)
         {
             await _context.Carts.AddAsync(cart);
             _context.SaveChanges();
 
-            return cart;
+            return convert(cart);
         }
 
-        public Cart Delelte(Cart cart)
+        public CartDetailsDto Delelte(Cart cart)
         {
             _context.Remove(cart);
             _context.SaveChanges();
 
-            return cart;
+            return convert(cart);
         }
 
-        public async Task<IEnumerable<Cart>> GetAll(string userId)
+        public async Task<IList<CartDetailsDto>> GetAll(string userId)
         {
             var cartItems = await _context.Carts.Where(c => c.ApplicationUserId == userId).ToListAsync();
 
+            var items = new List<CartDetailsDto>();
 
-            return cartItems;
+            foreach (var cartItem in cartItems)
+            {
+                items.Add(convert(cartItem));
+            }
+
+            return items;
         }
 
         public async Task<Cart> GetById(int id)
@@ -42,5 +49,30 @@ namespace eCommerce.Services
 
             return cart;
         }
+        public async Task<CartDetailsDto> GetByIdWithDetails(int id)
+        {
+            var cart = await _context.Carts.FirstOrDefaultAsync(c => c.CartId == id);
+
+            return convert(cart);
+        }
+
+        private CartDetailsDto convert(Cart cart)
+        {
+            var product = _context.Products.FirstOrDefault(p =>  p.ProductId == cart.ProductId);
+
+            
+
+            var cartDetails = new CartDetailsDto()
+            {
+                CartId = cart.CartId,
+                Quantity = cart.Quantity,
+                TotalPrice = product.Price * cart.Quantity,
+                ProductId = product.ProductId,
+                ProductName = product.Name
+            };
+
+            return cartDetails;
+        }
+
     }
 }

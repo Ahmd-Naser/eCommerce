@@ -1,16 +1,19 @@
-﻿using eCommerce.Models;
+﻿using eCommerce.DTOs;
+using eCommerce.Models;
 
 namespace eCommerce.Services
 {
     public interface ICartService
     {
-        Task<Cart> Add(Cart cart);
+        Task<CartDetailsDto> Add(Cart cart);
 
-        Cart Delelte(Cart cart);
+        CartDetailsDto Delelte(Cart cart);
 
         Task<Cart> GetById(int id);
+        Task<CartDetailsDto> GetByIdWithDetails(int id);
 
-        Task<IEnumerable<Cart>> GetAll(string userId);
+
+        Task<IList<CartDetailsDto>> GetAll(string userId);
 
     }
 }

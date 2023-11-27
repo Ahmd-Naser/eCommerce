@@ -9,7 +9,7 @@ namespace eCommerce.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-        [Authorize]
+       // [Authorize]
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
@@ -30,10 +30,13 @@ namespace eCommerce.Controllers
                 ProductId = dto.ProductId
             };
 
-            cart = await _cartService.Add(cart);
+            var Cart = await _cartService.Add(cart);
 
-            return Ok(cart);
+
+            return Ok(Cart);
         }
+
+        
 
         [HttpDelete("DeleteCart")]
         public async Task<IActionResult> Delete(int id)
