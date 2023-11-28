@@ -31,15 +31,22 @@ namespace eCommerce.Services
             return category;
         }
 
-        public async Task<IEnumerable<Category>> GetAll()
+        public async Task<IEnumerable<CategoryDto>> GetAll()
         {
             var Categories = await _context.Categorys.OrderBy(c => c.Name).ToListAsync();
            
             if(Categories is null)
                 Categories = new List<Category>();
 
+            var cats = new List<CategoryDto>();
 
-            return Categories;
+            foreach (var category in Categories)
+            {
+                cats.Add(new CategoryDto { Name = category.Name, Id = category.CategoryId });
+            }
+
+
+            return cats;
         }
 
         public async Task<Category> GetById(int id)

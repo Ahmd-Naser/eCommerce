@@ -1,8 +1,7 @@
 ﻿namespace eCommerce.DTOs
 {
-    public class CategoryChangeDto
+    public class CategoryNameDto
     {
-        public int id { set; get; }
-        public string newName { set; get; }
+        public string Name { set; get; }
     }
 }

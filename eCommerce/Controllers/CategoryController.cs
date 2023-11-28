@@ -18,7 +18,7 @@ namespace eCommerce.Controllers
         }
 
         [HttpPost("AddCategory")]
-        public async Task<IActionResult> AddCategory(CategoryDto dto)
+        public async Task<IActionResult> AddCategory(CategoryNameDto dto)
         {
             if (dto == null)
                 return BadRequest();
@@ -27,11 +27,18 @@ namespace eCommerce.Controllers
 
             _categoriesService.Add(category);
 
-            return Ok(category);
+            CategoryDto dtoEndpoint = new()
+            {
+                Id = category.CategoryId,
+                Name = category.Name
+            };
+
+            return Ok(dtoEndpoint);
+
         }
 
         [HttpDelete("DeleteCategory")]
-        public async Task<IActionResult> DeleteCategoryAsync(CategoryDto dto)
+        public async Task<IActionResult> DeleteCategoryAsync(CategoryNameDto dto)
         {
             if(dto == null)
                 return BadRequest();
@@ -43,22 +50,29 @@ namespace eCommerce.Controllers
 
             _categoriesService.Delete(category);
 
-            return Ok(category);
+            CategoryDto dtoEndpoint = new()
+            {
+                Id = category.CategoryId,
+                Name = category.Name
+            };
+
+            return Ok(dtoEndpoint);
 
         }
 
         [HttpPut("ModifyCategory")]
 
-        public async Task<IActionResult> ChangeName(CategoryChangeDto dto)
+        public async Task<IActionResult> ChangeName(CategoryDto dto)
         {
-            Category category = await _categoriesService.GetById(dto.id);
+            Category category = await _categoriesService.GetById(dto.Id);
 
             if(category == null)
                 return BadRequest();
 
-            category.Name = dto.newName;
+            category.Name = dto.Name;
 
-            return Ok(category);
+
+            return Ok(dto);
         }
 
         [HttpGet("AllCategories")]

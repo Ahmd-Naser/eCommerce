@@ -5,7 +5,7 @@ namespace eCommerce.Services
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<Category>> GetAll();
+        Task<IEnumerable<CategoryDto>> GetAll();
         Task<Category> GetById(int id);
         Task<Category> GetByName(string name);
 
